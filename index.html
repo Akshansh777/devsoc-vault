@@ -1,17 +1,449 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>DevSoc Vault Hunt</title>
-  <!--
-    CLUE: The next answer isn't written anywhere on this page.
-    You have to ASK for it. Go to https://huggingface.co/spaces/Universeexplorer777/The-Vault-Keeper and talk to the
-    Vault Keeper. Direct questions won't work. Think about how you'd prompt it. You have learnt jailbreaking in Prompt Engineering Session.
-  -->
-  <meta name="hint" content="check-the-head-carefully">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Odyssey — Grand Finale | DevSoc × GDGC UIET</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #090b10;
+      --card-bg: rgba(255, 255, 255, 0.03);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.35);
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .glow-sphere {
+      position: absolute;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      pointer-events: none;
+    }
+    .glow-1 { top: -100px; left: -100px; background: var(--primary-glow); }
+    .glow-2 { top: 400px; right: -150px; background: rgba(56, 189, 248, 0.2); }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* Navigation */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .brand {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.5px;
+    }
+    .brand span {
+      background: linear-gradient(135deg, #a5b4fc, var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #c7d2fe;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 4.5rem 0 3rem;
+      text-align: center;
+    }
+    .collab-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #fff 30%, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* Venue Badge */
+    .venue-strip {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 1rem 2rem;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      margin-bottom: 3.5rem;
+    }
+    .venue-item {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    .venue-item .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+    .venue-item .val {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+    }
+    .divider {
+      width: 1px;
+      height: 35px;
+      background: var(--card-border);
+    }
+
+    /* Countdown Section */
+    .countdown-container {
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .countdown-header {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+    .countdown-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 1.75rem;
+    }
+    .timer-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .timer-box {
+      background: rgba(13, 16, 23, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 1.25rem 1.75rem;
+      min-width: 105px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+    .timer-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.75rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+    .timer-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Cards Grid */
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+    }
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2.25rem 2rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .card-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.75rem;
+      font-weight: 700;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--card-border);
+      padding: 2.5rem 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    #vault-trigger {
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    #vault-trigger:hover {
+      opacity: 1;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-  <h1>Nothing to see here... or is there?</h1>
-  <p>Right-click → Inspect → look closely at the &lt;head&gt; tag.</p>
+  <div class="glow-sphere glow-1"></div>
+  <div class="glow-sphere glow-2"></div>
+
+  <div class="container">
+    <!-- Navbar -->
+    <nav>
+      <div class="brand">
+        Tech Odyssey <span>Finale</span>
+      </div>
+      <div class="pill">
+        <span>●</span> DevSoc × GDGC UIET
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="collab-badge">
+        Presented by <strong style="color: #fff; margin: 0 4px;">DevSoc Club</strong> (UIET's Newest Club) &nbsp;×&nbsp; GDGC UIET KUK
+      </div>
+      <h1>The Grand Finale of <br><span>Tech Odyssey Workshop</span></h1>
+      <p>The culmination of our flagship multi-track technical journey. Be in Room No. 100 as we conclude with deep-dives into autonomous pipelines, next-generation intelligence, and our community future.</p>
+
+      <!-- Key Details -->
+      <div class="venue-strip">
+        <div class="venue-item">
+          <span class="label">Location</span>
+          <span class="val">Room No. 100, UIET</span>
+        </div>
+        <div class="divider"></div>
+        <div class="venue-item">
+          <span class="label">Time</span>
+          <span class="val">Monday at 2:00 PM</span>
+        </div>
+        <div class="divider"></div>
+        <div class="venue-item">
+          <span class="label">Audience</span>
+          <span class="val">All Tech Enthusiasts</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Beautiful Countdown Timer -->
+    <div class="countdown-container">
+      <div class="countdown-header">Zero Hour Approaches</div>
+      <div class="countdown-title">Counting Down to Room No. 100</div>
+      <div class="timer-grid">
+        <div class="timer-box">
+          <div class="timer-num" id="days">00</div>
+          <div class="timer-label">Days</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="hours">00</div>
+          <div class="timer-label">Hours</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="minutes">00</div>
+          <div class="timer-label">Minutes</div>
+        </div>
+        <div class="timer-box">
+          <div class="timer-num" id="seconds">00</div>
+          <div class="timer-label">Seconds</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Track Highlights Grid (No Rewards Card) -->
+    <div class="section-header">
+      <h2>Featured Monday Sessions</h2>
+      <p>High-impact, hands-on masterclasses scheduled for our final meeting.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="card-tag">Special Track</span>
+        <h3>⚡ Intelligent Automations</h3>
+        <p>Architecting end-to-end autonomous workflows, custom webhooks, agentic triggers, and building automated developer toolchains from scratch.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Next-Gen AI</span>
+        <h3>🧠 GPT-6 Astra Deep-Dive</h3>
+        <p>Exploring the capabilities, multimodal reasoning, zero-latency orchestration, and frontier prompt mechanisms behind the Astra model architecture.</p>
+      </div>
+      <div class="card">
+        <span class="card-tag">Ecosystem & Community</span>
+        <h3>🚀 DevSoc Core & Roadmap</h3>
+        <p>Exclusive sneak peek into upcoming open-source cohorts, hackathons, and membership tracks led by DevSoc Club in collaboration with GDGC UIET.</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>
+        © 2026 DevSoc Club &amp; GDGC UIET KUK.
+      </div>
+
+      <!-- ========================================================================= -->
+      <!-- CLUE FOUND! But you have to paste the data-encrypted-trace attribute      -->
+      <!-- value into any Base64 decoder (or run atob(...) in DevTools) to get output. -->
+      <!-- ========================================================================= -->
+      <div id="vault-trigger" data-encrypted-trace="VGhlIG5leHQgYW5zd2VyIGlzbid0IHdyaXR0ZW4gYW55d2hlcmUgb24gdGhpcyBwYWdlLiBZb3UgaGF2ZSB0byBBU0sgZm9yIGl0LiBHbyB0byBodHRwczovL2h1Z2dpbmdmYWNlLmNvL3NwYWNlcy9Vbml2ZXJzZWV4cGxvcmVyNzc3L1RoZS1WYXVsdC1LZWVwZXIgYW5kIHRhbGsgdG8gdGhlIFZhdWx0IEtlZXBlci4gRGlyZWN0IHF1ZXN0aW9ucyB3b24ndCB3b3JrLiBUaGluayBhYm91dCBob3cgeW91J2QgcHJvbXB0IGl0LiBZb3UgaGF2ZSBsZWFybnQgamFpbGJyZWFraW5nIGluIFByb21wdCBFbmdpbmVlcmluZyBTZXNzaW9uLg==">
+        Crafted for engineers. Inspect element for hidden secrets.
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Computes target date for the upcoming Monday at 2:00 PM (14:00)
+    function getNextMondayAt2PM() {
+      const target = new Date();
+      const day = target.getDay(); // 0 = Sun, 1 = Mon, ..., 6 = Sat
+      
+      // Calculate how many days to add to land on Monday
+      let daysUntilMonday = (1 - day + 7) % 7;
+      
+      // If it's already Monday, check if 2:00 PM has already passed
+      if (daysUntilMonday === 0) {
+        if (target.getHours() >= 14) {
+          daysUntilMonday = 7; // Target next Monday
+        }
+      }
+      
+      target.setDate(target.getDate() + daysUntilMonday);
+      target.setHours(14, 0, 0, 0); // 2:00 PM
+      return target.getTime();
+    }
+
+    const eventTime = getNextMondayAt2PM();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = eventTime - now;
+
+      if (distance <= 0) {
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById("days").innerText = String(days).padStart(2, '0');
+      document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+      document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
+      document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
