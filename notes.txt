@@ -1,1 +1,4 @@
 Nothing to see here yet.
+
+CLUE FOUND: Nice work exploring the commit history!
+Next step: the live site has a secret in its <head>. Inspect the source of index.html.
